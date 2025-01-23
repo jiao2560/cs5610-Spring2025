@@ -43,6 +43,12 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Ensure visited links have the specified color */
+header a:visited {
+    color: rgb(237, 122, 127) !important; /* Set visited color with high specificity */
+}
+
+
 /* 1. Change the Github link color to crimson on hover using an attribute and pseudo-class selector */
 a[href*="github"]:hover {
     color: crimson;
@@ -75,4 +81,24 @@ header a:nth-of-type(2) {
 /* 6. Make the font-style of the Master's degree bullet point italic */
 .education > ul > li:first-child {
     font-style: italic;
+}
+
+/* Lab2 Updates */
+
+/* 1. Make all list items except the first one in Experience section darkGreen */
+.experience ul li:not(:first-child) {
+    color: darkgreen; /* Apply darkGreen color to all except the first list item */
+}
+
+/* 2. Add a link icon before links ending with ".edu" */
+a[href$=".edu"]::before {
+    content: url('../images/link.png'); /* Add link icon */
+    margin-right: 5px; /* Space between icon and link */
+    vertical-align: middle; /* Align the icon vertically */
+}
+
+/* 3. Style the last list item in Skills section */
+.skills ul li:last-child {
+    font-size: 1.3rem; /* 1.3 times the root font size */
+    background-color: rgba(120, 120, 120, 0.2); /* Background with 20% transparency */
 }

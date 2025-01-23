@@ -73,6 +73,6 @@ header a:nth-of-type(2) {
 }
 
 /* 6. Make the font-style of the Master's degree bullet point italic */
-.education ul li:first-child {
+.education > ul > li:first-child {
     font-style: italic;
 }

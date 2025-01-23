@@ -1,0 +1,44 @@
+/* Set the background color for the page */
+body {
+    background-color: rgb(231, 225, 214);
+    font-family: 'Roboto', Arial, sans-serif; /* Fallback fonts */
+    margin: 0;
+    padding: 0;
+}
+
+/* Center-align text in the header */
+header {
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 2px dotted darkslateblue; /* Dotted line */
+}
+
+/* Style the h1 element */
+header h1 {
+    color: #1050aa;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 2.2em;
+}
+
+/* Bold the first paragraph using its id */
+p#introduction {
+    font-weight: bold;
+}
+
+/* Add a dashed border around education and experience sections */
+.experience,
+.education {
+    border: 2px dashed orange;
+    margin: 10px 0; /* 10px top and bottom */
+    padding: 10px;
+}
+
+/* Style links */
+a {
+    color: darkblue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

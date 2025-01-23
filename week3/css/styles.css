@@ -60,3 +60,19 @@ a[href*="github"]::after {
     margin-left: 5px; /* Add some space between the link and the logo */
     vertical-align: middle; /* Align the logo vertically */
 }
+
+/* 4. Add 20px left margin to the second link in the header using a pseudo-class selector */
+header a:nth-of-type(2) {
+    margin-left: 20px;
+}
+
+/* Remove bullet points for items under the Skills section */
+.skills ul {
+    list-style-type: none; /* Remove bullet points */
+    padding-left: 20px; /* Add padding to align with other content */
+}
+
+/* 6. Make the font-style of the Master's degree bullet point italic */
+.education ul li:first-child {
+    font-style: italic;
+}

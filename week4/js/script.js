@@ -11,3 +11,13 @@ while (num <= 1024) {
     console.log(num);
     num *= 2;
 }
+
+// Prompt user for their name with validation
+let userName;
+do {
+    userName = prompt("Enter your name (must be at least 2 letters and not a number):");
+
+    // Check if input is a number or only 1 character
+} while (!userName || userName.trim().length < 2 || !isNaN(userName));
+
+alert("Welcome, " + userName + "!");

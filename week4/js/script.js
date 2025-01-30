@@ -21,3 +21,20 @@ do {
 } while (!userName || userName.trim().length < 2 || !isNaN(userName));
 
 alert("Welcome, " + userName + "!");
+
+// Function to calculate total price
+function calculateTotalPrice(billAmount, taxRate = 0.12, tipRate = 0.15) {
+    let taxAmount = billAmount * taxRate;
+    let tipAmount = billAmount * tipRate;
+    return billAmount + taxAmount + tipAmount;
+}
+
+// Function to log total price
+function logTotalPrice(billAmount) {
+    let totalPrice = calculateTotalPrice(billAmount);
+    console.log(`For a bill of $${billAmount.toFixed(2)}, the total price including tax and tip is: $${totalPrice.toFixed(2)}`);
+}
+
+// Example Usage:
+logTotalPrice(100); // Logs total for a $100 bill
+logTotalPrice(50);  // Logs total for a $50 bill

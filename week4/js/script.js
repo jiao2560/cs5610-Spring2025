@@ -38,3 +38,24 @@ function logTotalPrice(billAmount) {
 // Example Usage:
 logTotalPrice(100); // Logs total for a $100 bill
 logTotalPrice(50);  // Logs total for a $50 bill
+
+// Array of students
+let students = [
+    { name: "Cristian", age: 30, location: "Vancouver" },
+    { name: "James", age: 40, location: "Toronto" },
+    { name: "Garry", age: 20, location: "Vancouver" }
+];
+
+// Function to find students in Vancouver
+function findStudentsInVancouver(students) {
+    return students.filter(student => student.location === "Vancouver");
+}
+
+// Function to find students who are 30+ years old
+function findStudentsAbove30(students) {
+    return students.filter(student => student.age >= 30);
+}
+
+// Log results
+console.log("Students in Vancouver:", findStudentsInVancouver(students));
+console.log("Students 30+ years old:", findStudentsAbove30(students));

@@ -29,3 +29,18 @@ body {
   font-size: 80%;
   margin: 5px;
 }
+
+main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 20px;
+}
+
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center tags horizontally */
+  gap: 5px;
+}

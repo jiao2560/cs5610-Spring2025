@@ -4,7 +4,7 @@ function getRadius() {
     radius = parseFloat(radius);
 
     if (isNaN(radius) || radius <= 0) {
-        document.getElementById("result").textContent = "Error: Invalid input!";
+        document.getElementById("result").textContent = "Please enter a valid positive number.";
         return null;
     }
 
@@ -15,11 +15,11 @@ function getRadius() {
 function calculateArea(radius) {
     if (radius !== null) {
         let area = Math.PI * Math.pow(radius, 2);
-        document.getElementById("result").textContent = `Area of the circle: ${area.toFixed(2)}`;
+        document.getElementById("result").textContent = `The area of the circle is: ${area.toFixed(2)}`;
     }
 }
 
-// Call functions on page load
+// Call functions when the script loads
 let radius = getRadius();
 calculateArea(radius);
 
@@ -27,7 +27,14 @@ calculateArea(radius);
 let shoppingItems = ["bread", "cheese", "green pepper"];
 function populateShoppingList(items) {
     let ul = document.querySelector(".shopping");
+
+    if (!ul) {
+        console.error("Shopping list element not found.");
+        return;
+    }
+
     ul.innerHTML = ""; // Clear existing content
+
     items.forEach(item => {
         let li = document.createElement("li");
         li.textContent = item;
@@ -37,71 +44,109 @@ function populateShoppingList(items) {
 populateShoppingList(shoppingItems);
 
 // Task 3: Change list marker type & highlight "green"
-function changeListStyle() {
+function applySquareListClass() {
     let ul = document.querySelector(".shopping");
-    ul.setAttribute("class", "shopping squareList");
-    ul.classList.add("squareList");
+    if (ul) {
+        ul.classList.add("squareList");
+    }
+}
 
-    let listItems = ul.getElementsByTagName("li");
-    for (let li of listItems) {
-        if (li.textContent.includes("green")) {
+function applySquareListUsingAttribute() {
+    let ul = document.querySelector(".shopping");
+    if (ul) {
+        ul.setAttribute("class", "shopping squareList");
+    }
+}
+
+function highlightGreenItems() {
+    let listItems = document.querySelectorAll("li");
+
+    listItems.forEach(li => {
+        if (li.textContent.toLowerCase().includes("green")) {
             li.classList.add("green-text");
+        }
+    });
+}
+
+// Apply styles when the page loads
+applySquareListClass();
+highlightGreenItems();
+
+// Task 4: Event listener for updateImage button
+const updateImageButton = document.getElementById("updateImage");
+
+function toggleButtonText() {
+    if (updateImageButton) {
+        let newText = updateImageButton.textContent === "Click Me!" ? "Clicked!" : "Click Me!";
+        updateImageButton.textContent = newText;
+        localStorage.setItem("updateImageButtonText", newText);
+    }
+}
+
+function restoreButtonText() {
+    if (updateImageButton) {
+        let savedText = localStorage.getItem("updateImageButtonText");
+        if (savedText) {
+            updateImageButton.textContent = savedText;
         }
     }
 }
-changeListStyle();
 
-// Task 4: Event listener for updateImage button
-let updateButton = document.getElementById("updateImage");
-let shoppingCartImg = document.getElementById("shoppingCart");
+// Restore button text when the page loads
+document.addEventListener("DOMContentLoaded", restoreButtonText);
 
-function toggleButtonText() {
-    let newText = updateButton.textContent === "Click Me!" ? "Clicked!" : "Click Me!";
-    updateButton.textContent = newText;
-    localStorage.setItem("updateButtonText", newText);
+// Add event listener for toggling text
+if (updateImageButton) {
+    updateImageButton.addEventListener("click", toggleButtonText);
 }
 
-function updateImageOnce() {
-    shoppingCartImg.src = "images/shoppingCart.png";
-    shoppingCartImg.alt = "Shopping Cart";
-    shoppingCartImg.width = 100;
-    shoppingCartImg.height = 100;
-    updateButton.removeEventListener("click", updateImageOnce);
-}
-
-// Restore button text from local storage when the page loads
-document.addEventListener("DOMContentLoaded", function() {
-    let savedButtonText = localStorage.getItem("updateButtonText");
-    if (savedButtonText) {
-        updateButton.textContent = savedButtonText;
+// Task 5: Update image attributes (only runs once)
+function updateImage() {
+    let img = document.getElementById("shoppingCart");
+    if (img) {
+        img.src = "images/shoppingCart.png";
+        img.alt = "Shopping Cart";
+        img.width = 200;
+        img.height = 200;
     }
-});
 
-// Add event listeners
-updateButton.addEventListener("click", toggleButtonText);
-updateButton.addEventListener("click", updateImageOnce, { once: true });
-
-// Task 5: Change button background color on hover
-function changeBackgroundColor(event) {
-    event.target.style.backgroundColor = event.target.textContent.toLowerCase();
+    updateImageButton.removeEventListener("click", updateImage);
 }
 
-let colorButtons = document.querySelectorAll("#colorButtons button");
-colorButtons.forEach(button => {
+// Attach event listener for image update (only runs once)
+if (updateImageButton) {
+    updateImageButton.addEventListener("click", updateImage, { once: true });
+}
+
+// Task 6: Change background color based on button text
+function changeBackgroundColor(event) {
+    let target = event.target;
+
+    // Ensure the event was triggered by a BUTTON
+    if (target.tagName === "BUTTON") {
+        let color = target.textContent.trim().toLowerCase(); // Normalize text
+        document.body.style.backgroundColor = color;
+    }
+}
+
+// Attach event listener to color buttons inside #colorButtons
+document.querySelectorAll("#colorButtons button").forEach(button => {
     button.addEventListener("mouseover", changeBackgroundColor);
 });
 
-// Task 6: Event Delegation for color buttons
-document.getElementById("colorButtons").addEventListener("mouseover", function(event) {
+// Task 7: Event Delegation for color buttons (turns background green)
+document.getElementById("colorButtons").addEventListener("mouseover", (event) => {
     if (event.target.tagName === "BUTTON") {
         event.target.style.backgroundColor = "green";
     }
 });
 
-// Task 7: Click event for strikethrough on shopping list items
-document.querySelector(".shopping").addEventListener("click", function(event) {
+// Task 8: Click event for strikethrough on shopping list items
+document.querySelector(".shopping").addEventListener("click", (event) => {
     if (event.target.tagName === "LI") {
         event.target.style.textDecoration =
             event.target.style.textDecoration === "line-through" ? "none" : "line-through";
     }
 });
+
+

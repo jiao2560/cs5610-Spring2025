@@ -7,11 +7,10 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
+<div class="wrapper">
     <div class="container">
         <h1>Boba Tea Order Form</h1>
         <form id="order-form">
-            <!-- Flavor Selection -->
             <label for="flavor">Choose a flavor:</label>
             <select id="flavor" name="flavor">
                 <option value="" disabled selected>--Please choose a flavor--</option>
@@ -20,7 +19,6 @@
                 <option value="strawberry">Strawberry</option>
             </select>
 
-            <!-- Size Selection -->
             <label for="size">Choose a size:</label>
             <select id="size" name="size">
                 <option value="" disabled selected>--Please choose a size--</option>
@@ -29,7 +27,6 @@
                 <option value="large">Large</option>
             </select>
 
-            <!-- Toppings Selection (Multiple Allowed) -->
             <label for="toppings">Choose toppings:</label>
             <select id="toppings" name="toppings" multiple>
                 <option value="boba">Boba</option>
@@ -37,17 +34,14 @@
                 <option value="pudding">Pudding</option>
             </select>
 
-            <!-- Submit Button -->
             <button id="order-button" type="button">Place Order</button>
         </form>
     </div>
-
-    <!-- Order Summary Section (Moved Below) -->
     <div class="container order-summary">
         <h2>Order Summary</h2>
         <p id="summary-text">Your order details will appear here.</p>
     </div>
-
-    <script src="js/script.js"></script>
+</div>
+<script src="js/script.js"></script>
 </body>
 </html>

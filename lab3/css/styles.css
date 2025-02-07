@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     display: flex;
+    flex-direction: column; /* Stack containers vertically */
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -82,6 +83,17 @@ select[multiple] {
     outline: none;
     width: 100%;
     overflow-y: auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#order-summary {
+    margin-top: 30px; /* Adjust this value to increase spacing */
 }
 
 

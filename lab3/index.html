@@ -14,6 +14,7 @@
             <!-- Flavor Selection -->
             <label for="flavor">Choose a flavor:</label>
             <select id="flavor" name="flavor">
+                <option value="" disabled selected>--Please choose a flavor--</option>
                 <option value="original">Original</option>
                 <option value="mango">Mango</option>
                 <option value="strawberry">Strawberry</option>
@@ -31,16 +32,22 @@
             <!-- Toppings Selection (Multiple Allowed) -->
             <label for="toppings">Choose toppings:</label>
             <select id="toppings" name="toppings" multiple>
-                <option value="" disabled>--Please choose toppings--</option>
                 <option value="boba">Boba</option>
                 <option value="jelly">Jelly</option>
                 <option value="pudding">Pudding</option>
             </select>
 
             <!-- Submit Button -->
-            <button type="submit">Place Order</button>
+            <button id="order-button" type="button">Place Order</button>
         </form>
     </div>
+
+    <!-- Order Summary Section -->
+    <div class="container" id="order-summary">
+        <h2>Order Summary</h2>
+        <p id="summary-text">Your order details will appear here.</p>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>

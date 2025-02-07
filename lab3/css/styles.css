@@ -64,4 +64,16 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+/* Apply styles for the order summary container (without duplication) */
+#order-summary {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
 

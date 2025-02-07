@@ -35,11 +35,12 @@ function calculateTotalPrice(flavor, size, toppings) {
 
 // Function to display order summary
 function displayOrderSummary(order) {
-    let toppingsText = order.toppings.length > 0 ? order.toppings.join(", ") : "no toppings";
-    let summaryText = `You have ordered a ${order.size} ${order.flavor} boba with these toppings: ${toppingsText}. Total Price: $${order.finalPrice.toFixed(2)}`;
+    let toppingsText = order.toppings.length > 0 ? `with these toppings: ${order.toppings.join(", ")}` : "with no toppings";
+    let summaryText = `You have ordered a ${order.size} ${order.flavor} boba ${toppingsText}. Total Price: $${order.finalPrice.toFixed(2)}`;
 
     document.getElementById("summary-text").textContent = summaryText;
 }
+
 
 // Function to create and log an order
 function placeOrder() {

@@ -46,9 +46,15 @@ app.get('/about', function(req, res) {
   res.send('This is the About Page!');
 });
 
-// Tasks route - Displays a heading using <h1>
+// Tasks list route
 app.get('/tasks', function(req, res) {
   res.send('<h1>Task List</h1>');
+});
+
+// Dynamic Task Route (Handles requests like /tasks/2)
+app.get('/tasks/:taskId', function(req, res) {
+  const taskId = req.params.taskId;
+  res.send(`You are viewing task ${taskId}`);
 });
 
 // Start server on port 3000
@@ -56,6 +62,3 @@ const port = 3000;
 app.listen(port, function() {
   console.log(`Example app listening on http://localhost:${port}`);
 });
-
-
-

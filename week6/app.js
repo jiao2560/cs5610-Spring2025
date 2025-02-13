@@ -33,3 +33,18 @@ logger.log();  // Output: logged successfully
 // Print the version variable
 console.log(`Logger version: ${logger.version}`);  // Output: Logger version: 2.6
 
+const express = require('express');
+const app = express();
+
+// Define a simple route
+app.get('/', (req, res) => {
+    res.send('Hello, Express!');
+});
+
+// Start the server on port 3000
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+

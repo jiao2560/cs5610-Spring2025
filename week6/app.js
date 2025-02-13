@@ -36,8 +36,18 @@ console.log(`Logger version: ${logger.version}`);  // Output: Logger version: 2.
 const express = require('express');
 const app = express();
 
-// Serve static files from the "public" folder
+// Set Pug as the template engine
+app.set('view engine', 'pug');
+app.set('views', './views'); // Specify the views directory
+
+// Serve static files from "public" folder
 app.use(express.static('public'));
+
+// Import the tasks router
+const tasksRouter = require('./routes/tasks');
+
+// Mount the tasks router at /tasks
+app.use('/tasks', tasksRouter);
 
 // Root route
 app.get('/', function(req, res) {
@@ -49,19 +59,10 @@ app.get('/about', function(req, res) {
   res.send('This is the About Page!');
 });
 
-// Tasks list route
-app.get('/tasks', function(req, res) {
-  res.send('<h1>Task List</h1>');
-});
-
-// Dynamic Task Route (Handles requests like /tasks/2)
-app.get('/tasks/:taskId', function(req, res) {
-  const taskId = req.params.taskId;
-  res.send(`You are viewing task ${taskId}`);
-});
-
 // Start server on port 3000
 const port = 3000;
 app.listen(port, function() {
-  console.log(`Example app listening on http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
+
+

@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     display: flex;
+    flex-direction: column; /* Stack containers vertically */
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -64,4 +65,35 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+/* Ensure the order summary appears below the form */
+.order-summary {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Improve multi-select dropdown appearance */
+select[multiple] {
+    height: auto;
+    min-height: 80px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#order-summary {
+    margin-top: 30px; /* Adjust this value to increase spacing */
+}
+
 

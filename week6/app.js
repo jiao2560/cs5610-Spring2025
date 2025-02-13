@@ -36,9 +36,19 @@ console.log(`Logger version: ${logger.version}`);  // Output: Logger version: 2.
 const express = require('express');
 const app = express();
 
-// Route for the root URL "/"
+// Root route
 app.get('/', function(req, res) {
   res.send('Hello World!');
+});
+
+// About route
+app.get('/about', function(req, res) {
+  res.send('This is the About Page!');
+});
+
+// Tasks route - Displays a heading using <h1>
+app.get('/tasks', function(req, res) {
+  res.send('<h1>Task List</h1>');
 });
 
 // Start server on port 3000
@@ -46,5 +56,6 @@ const port = 3000;
 app.listen(port, function() {
   console.log(`Example app listening on http://localhost:${port}`);
 });
+
 
 

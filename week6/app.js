@@ -36,15 +36,15 @@ console.log(`Logger version: ${logger.version}`);  // Output: Logger version: 2.
 const express = require('express');
 const app = express();
 
-// Define a simple route
-app.get('/', (req, res) => {
-    res.send('Hello, Express!');
+// Route for the root URL "/"
+app.get('/', function(req, res) {
+  res.send('Hello World!');
 });
 
-// Start the server on port 3000
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// Start server on port 3000
+const port = 3000;
+app.listen(port, function() {
+  console.log(`Example app listening on http://localhost:${port}`);
 });
 
 

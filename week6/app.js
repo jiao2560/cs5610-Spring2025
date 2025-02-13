@@ -36,6 +36,9 @@ console.log(`Logger version: ${logger.version}`);  // Output: Logger version: 2.
 const express = require('express');
 const app = express();
 
+// Serve static files from the "public" folder
+app.use(express.static('public'));
+
 // Root route
 app.get('/', function(req, res) {
   res.send('Hello World!');

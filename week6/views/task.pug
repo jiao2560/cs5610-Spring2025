@@ -1,7 +1,20 @@
-// views/task.pug
 doctype html
 html(lang="en")
   head
     title Task Details
   body
-    h1 You are viewing task #{id} using a template
+    h1 You are viewing task #{task.id}
+
+    p
+      strong Task title:
+      | #{task.title}
+
+    p
+      | #{user.name} is responsible for this task
+
+    p
+      strong Task status:
+      | #{task.completed ? '"Completed"' : '"Not Completed"'}
+
+
+

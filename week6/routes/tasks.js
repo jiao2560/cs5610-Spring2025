@@ -1,17 +1,28 @@
-// routes/tasks.js
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 
-// Route to get all tasks
-router.get('/', function(req, res) {
-  res.send('<h1>Task List</h1>');
-});
+// ✅ Route to get a specific task and fetch the responsible user's name
+router.get('/:taskId', async function (req, res) {
+    try {
+        const taskId = req.params.taskId;
 
-// Route to get a specific task using Pug template
-router.get('/:taskId', function(req, res) {
-  const taskId = req.params.taskId;
-  res.render('task', { id: taskId }); // Passing taskId as "id" to the template
+        // 1️⃣ Fetch task details
+        const taskResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos/${taskId}`);
+        const task = taskResponse.data;
+
+        // 2️⃣ Fetch user details using task.userId
+        const userResponse = await axios.get(`https://jsonplaceholder.typicode.com/users/${task.userId}`);
+        const user = userResponse.data;
+
+        // 3️⃣ Render the template with task and user data
+        res.render('task', { task, user });
+    } catch (error) {
+        console.error('Error fetching task or user:', error);
+        res.status(500).json({ error: 'Failed to fetch task or user' });
+    }
 });
 
 // Export the router
 module.exports = router;
+

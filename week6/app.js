@@ -1,26 +1,46 @@
 const fs = require('fs');
+const util = require('util');
 
 const filePath = 'message.txt';
 const message = 'Hello, this is a test message written to a file!';
 
+// Convert fs.writeFile and fs.readFile into promise-based functions
+const writeFileAsync = util.promisify(fs.writeFile);
+const readFileAsync = util.promisify(fs.readFile);
 
-// Write the message to a new file
-fs.writeFile(filePath, message, (err) => {
-    if (err) {
-        console.error('Error writing to file:', err);
-        return;
-    }
-    console.log('Message successfully written to file.');
+console.log('Starting file operations...');
 
-    // Read the message back
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading file:', err);
-            return;
-        }
+/*
+// ✅ Commenting out the .then() and .catch() approach
+writeFileAsync(filePath, message)
+    .then(() => {
+        console.log('Message successfully written to file.');
+        return readFileAsync(filePath, 'utf8');
+    })
+    .then((data) => {
         console.log('Read from file:', data);
+    })
+    .catch((err) => {
+        console.error('Error:', err);
     });
-});
+*/
+
+// ✅ Keeping only the async/await approach
+async function handleFileOperations() {
+    try {
+        await writeFileAsync(filePath, message);
+        console.log('Message successfully written to file.');
+
+        const data = await readFileAsync(filePath, 'utf8');
+        console.log('Read from file:', data);
+    } catch (err) {
+        console.error('Error:', err);
+    }
+}
+
+// Call the async function
+handleFileOperations();
+
 
 // app.js
 

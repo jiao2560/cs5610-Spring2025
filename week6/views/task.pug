@@ -2,19 +2,29 @@ doctype html
 html(lang="en")
   head
     title Task Details
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      p {
+        font-size: 18px;
+        margin: 10px 0;
+      }
   body
-    h1 You are viewing task #{task.id}
+    h1 You are viewing task #{task.id} using a template
 
     p
-      strong Task title:
-      | #{task.title}
+      | The title of the task is #{task.title}
 
     p
-      | #{user.name} is responsible for this task
+      | The task is #{task.completed ? "completed" : "not completed"}
 
     p
-      strong Task status:
-      | #{task.completed ? '"Completed"' : '"Not Completed"'}
-
+      | #{user.name} is responsible for this
 
 

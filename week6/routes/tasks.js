@@ -2,31 +2,27 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-// Route to fetch all tasks from an external API
-router.get('/', function (req, res) {
-    axios.get('https://jsonplaceholder.typicode.com/todos/')
-        .then(response => {
-            res.json(response.data); // Send the API response to the browser
-        })
-        .catch(error => {
-            console.error('Error fetching tasks:', error);
-            res.status(500).json({ error: 'Failed to fetch tasks' });
-        });
-});
+// ✅ Route to get a specific task and fetch the responsible user's name
+router.get('/:taskId', async function (req, res) {
+    try {
+        const taskId = req.params.taskId;
 
-// ✅ Route to get a specific task and render it using Pug
-router.get('/:taskId', function (req, res) {
-    const taskId = req.params.taskId;
+        // 1️⃣ Fetch task details
+        const taskResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos/${taskId}`);
+        const task = taskResponse.data;
 
-    axios.get(`https://jsonplaceholder.typicode.com/todos/${taskId}`)
-        .then(response => {
-            res.render('task', { task: response.data }); // Pass full task object to the template
-        })
-        .catch(error => {
-            console.error('Error fetching task:', error);
-            res.status(500).json({ error: 'Failed to fetch task' });
-        });
+        // 2️⃣ Fetch user details using task.userId
+        const userResponse = await axios.get(`https://jsonplaceholder.typicode.com/users/${task.userId}`);
+        const user = userResponse.data;
+
+        // 3️⃣ Render the template with task and user data
+        res.render('task', { task, user });
+    } catch (error) {
+        console.error('Error fetching task or user:', error);
+        res.status(500).json({ error: 'Failed to fetch task or user' });
+    }
 });
 
 // Export the router
 module.exports = router;
+

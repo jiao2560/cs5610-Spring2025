@@ -10,7 +10,11 @@ html(lang="en")
       | #{task.title}
 
     p
+      | #{user.name} is responsible for this task
+
+    p
       strong Task status:
       | #{task.completed ? '"Completed"' : '"Not Completed"'}
+
 
 

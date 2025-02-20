@@ -2,6 +2,18 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
+
+router.get('/', (req, res) => {
+  axios.get('https://jsonplaceholder.typicode.com/todos')
+      .then(response => {
+          res.json(response.data); // Send the fetched JSON data to the client
+      })
+      .catch(error => {
+          console.error('Error fetching tasks:', error);
+          res.status(500).json({ error: 'Failed to fetch tasks' });
+      });
+});
+
 // ✅ Route to get a specific task and fetch the responsible user's name
 router.get('/:taskId', async function (req, res) {
     try {

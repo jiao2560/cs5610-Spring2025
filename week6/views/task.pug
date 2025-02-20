@@ -11,20 +11,18 @@ html(lang="en")
         font-size: 24px;
         font-weight: bold;
       }
-      p {
+      ul {
         font-size: 18px;
-        margin: 10px 0;
+        margin-top: 10px;
+      }
+      li {
+        margin-bottom: 5px;
       }
   body
     h1 You are viewing task #{task.id} using a template
 
-    p
-      | The title of the task is #{task.title}
-
-    p
-      | The task is #{task.completed ? "completed" : "not completed"}
-
-    p
-      | #{user.name} is responsible for this
-
+    ul
+      li The title of the task is #{task.title}
+      li The task is #{task.completed ? "completed" : "not completed"}
+      li #{user.name} is responsible for this
 

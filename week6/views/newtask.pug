@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    title Add New Task
+  body
+    h1 Add a New Task
+
+    form(action="/tasks" method="POST")
+      label(for="title") Enter task's title:
+      input(type="text" name="title" required)
+
+      label(for="date") Enter task's date:
+      input(type="date" name="date" required)
+
+      label(for="completed") Completed:
+      input(type="checkbox" name="completed" value="true")
+
+      button(type="submit") Add Task

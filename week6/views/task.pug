@@ -1,20 +1,13 @@
 doctype html
 html(lang="en")
   head
-    title Task Details
+    title= "Task Details"
+    link(rel="stylesheet", href="/styles.css")
   body
-    h1 You are viewing task #{task.id}
-
-    p
-      strong Task title:
-      | #{task.title}
-
-    p
-      | #{user.name} is responsible for this task
-
-    p
-      strong Task status:
-      | #{task.completed ? '"Completed"' : '"Not Completed"'}
-
+    h1 You are viewing task #{id} using a template
+    ul
+      li The title of the task is #{title}
+      li The task is #{completed}
+      li The due date is #{dueDate}
 
 

@@ -1,0 +1,12 @@
+doctype html
+html(lang="en")
+  head
+    title Tasks List
+  body
+    h1 All Tasks
+    ul
+      each task in tasks
+        if task.title
+          li
+            a(href=`/tasks/${task._id}`) #{task.title}
+            | (#{task.completed ? "completed" : "not completed"})

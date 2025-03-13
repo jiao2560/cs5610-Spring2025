@@ -78,8 +78,8 @@ app.get("/", (req, res) => {
 // app.get('/tasks', (req, res) => {
 //     res.send('<h1>List of all the tasks</h1>');
 // });
-app.use(express.json())
-app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Serve static files from the "public" folder
 app.use(express.static("public"));
 
@@ -91,7 +91,6 @@ app.set("views", "./views");
 
 // Mount the tasks router at /tasks
 app.use("/tasks", tasksRouter);
-
 
 // Route to handle taskId parameter
 // app.get('/tasks/:taskId', (req, res) => {
@@ -105,16 +104,21 @@ app.use("/tasks", tasksRouter);
 // });
 
 // Redirect /newtask to /tasks/newtask
-app.get('/newtask', (req, res) => {
-    res.redirect('/tasks/newtask');
+app.get("/newtask", (req, res) => {
+  res.redirect("/tasks/newtask");
 });
 
 // Start the server
-const { connect, addToDB } = require("./db");
+const { connectDB, addToDB, findOneTask } = require("./db");
 const port = 3000;
 app.listen(port, async () => {
   console.log(`Server is running on http://localhost:${port}`);
-  await connect(); // Connect to MongoDB after server starts
+  await connectDB(); // Connect to MongoDB after server starts
   console.log("connected to databse");
-  addToDB({ task: "Reading", user: "Me" });
+//   addToDB({ task: "Reading", user: "Me" });
+
+  // Test findOneTask function
+  const testQuery = { title: "Read" }; // ✅ Test with a hardcoded query
+  const task = await findOneTask(testQuery);
+  console.log("Found Task:", task);
 });

@@ -1,11 +1,15 @@
-function App() {
-  const message = "Welcome to my React App!";  // Declare a variable
+import React from "react";
+import Header from "./components/Header";  // Import Header component
+
+export default function App() {
+  const appName = "My Awesome App";  // Define app name
+  const version = 2;  // Define app version
 
   return (
     <div>
-      <h1>{message}</h1>  {/* Pass the variable inside h1 */}
+      {/* Pass appName and version as props */}
+      <Header myAppName={appName} version={version} />
     </div>
   );
 }
 
-export default App;

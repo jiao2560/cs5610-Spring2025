@@ -27,3 +27,14 @@
 .add-task-btn:hover {
   background-color: #0056b3;
 }
+/* Task List Styles */
+.task-list {
+  list-style-type: disc; /* Adds bullet points */
+  padding-left: 20px; /* Indent bullets */
+}
+
+.task-item {
+  background: none; /* Remove grey background */
+  padding: 5px 0;
+  font-size: 16px;
+}

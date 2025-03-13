@@ -1,15 +1,13 @@
 import React from "react";
-import Header from "./components/Header";  // Import Header component
+import Header from "./components/Header";
 
 export default function App() {
-  const appName = "My Awesome App";  // Define app name
-  const version = 2;  // Define app version
+  const appName = "My Awesome App";
+  const version = 2;
 
   return (
-    <div>
-      {/* Pass appName and version as props */}
+    <div className="app-container">  {/* Apply className for styling */}
       <Header myAppName={appName} version={version} />
     </div>
   );
 }
-

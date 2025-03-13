@@ -1,3 +1,29 @@
-body {
-  padding: 20px;
+/* Styles for the App Component */
+.app-container {
+  border: 2px solid black;  /* Creates a border */
+  padding: 20px;  /* Adds padding inside the div */
+  margin: 20px;  /* Adds space around the div */
+}
+
+/* Styles for the Header Component */
+.header {
+  display: flex;  /* Enables Flexbox */
+  justify-content: space-between;  /* Distributes children evenly */
+  align-items: center;  /* Centers items vertically */
+  padding: 10px;  /* Adds padding */
+}
+
+/* Styles for the Add Task Button */
+.add-task-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.add-task-btn:hover {
+  background-color: #0056b3;
 }

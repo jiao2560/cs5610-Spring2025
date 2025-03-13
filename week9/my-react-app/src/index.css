@@ -38,3 +38,32 @@
   padding: 5px 0;
   font-size: 16px;
 }
+/* Task Container */
+.task-content {
+  display: flex;
+  justify-content: space-between; /* Pushes text left and icon right */
+  align-items: center;
+  background: #f0f0ff;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+}
+
+/* Delete Icon Styling */
+.delete-icon {
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+}
+
+.delete-icon:hover {
+  color: red;
+}
+
+.task-title {
+  font-weight: bold;
+}
+
+.task-date {
+  font-size: 14px;
+}

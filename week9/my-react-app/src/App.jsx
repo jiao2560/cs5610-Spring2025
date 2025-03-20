@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
-import TasksList from "./components/TasksList"; // Import TasksList component
-import AddTask from "./components/AddTask"; // Import AddTask component
+import AddTask from "./components/AddTask";
+import TasksList from "./components/TasksList";
 
 export default function App() {
-  const appName = "My Awesome App";
-  const version = 2;
+  const [showForm, setShowForm] = useState(false); // Track form visibility
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
 
   return (
     <div className="app-container">
-      <Header myAppName={appName} version={version} />
-      <AddTask /> {/* Render AddTask form below Header */}
-      <TasksList /> {/* Render the task list */}
+      <Header onToggleForm={toggleForm} showForm={showForm} />
+      {showForm && <AddTask />} {/* Show form only if showForm is true */}
+      <TasksList />
     </div>
   );
 }

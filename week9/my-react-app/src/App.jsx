@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TasksList from "./components/TasksList";
 
 export default function App() {
   const [showForm, setShowForm] = useState(false);
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Review session 9 material", date: "June 4th at 1 pm" },
-    { id: 2, title: "Do quiz 9", date: "June 4th at 6 pm" },
-    { id: 3, title: "Work on assignment 2", date: "June 5th at 8 am" },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  // Fetch tasks from fake server when component mounts
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("http://localhost:5000/tasks");
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setTasks(data); // Update state with fetched tasks
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error.message);
+      }
+    }
+
+    fetchData();
+  }, []); // Empty array = run only once when component mounts
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -18,9 +34,8 @@ export default function App() {
   return (
     <div className="app-container">
       <Header onToggleForm={toggleForm} showForm={showForm} />
-      {showForm && <AddTask setTasks={setTasks} tasks={tasks} />} {/* Pass setTasks */}
-      <TasksList tasks={tasks} setTasks={setTasks} /> {/* Pass tasks and setTasks */}
+      {showForm && <AddTask setTasks={setTasks} tasks={tasks} />}
+      <TasksList tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }
-

@@ -8,9 +8,11 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks from fake server when component mounts
+  // ✅ Fetch tasks from fake server when component mounts
   useEffect(() => {
     async function fetchData() {
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
+
       setLoading(true);
       try {
         const response = await fetch("http://localhost:5001/tasks");
@@ -31,11 +33,12 @@ export default function App() {
     fetchData();
   }, []);
 
+  // ✅ Function to toggle form visibility
   const toggleForm = () => {
     setShowForm(!showForm);
   };
 
-  // ✅ DELETE function to remove task from server and UI
+  // ✅ Function to DELETE task from server and update UI
   const deleteTask = async (id) => {
     try {
       const response = await fetch(`http://localhost:5001/tasks/${id}`, {
@@ -48,21 +51,45 @@ export default function App() {
 
       console.log(`Task ${id} deleted successfully`);
 
-      // ✅ Update state to remove deleted task from UI
-      setTasks(tasks.filter(task => task.id !== id));
+      // ✅ Remove task from UI
+      setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
       console.error("Delete Error:", error.message);
+    }
+  };
+
+  // ✅ Function to ADD a new task (POST request)
+  const addTask = async (newTask) => {
+    try {
+      const response = await fetch("http://localhost:5001/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add task");
+      }
+
+      const addedTask = await response.json();
+
+      // ✅ Update UI with new task
+      setTasks([...tasks, addedTask]);
+    } catch (error) {
+      console.error("Error adding task:", error);
     }
   };
 
   return (
     <div className="app-container">
       <Header onToggleForm={toggleForm} showForm={showForm} />
-      {showForm && <AddTask setTasks={setTasks} tasks={tasks} />}
+      {showForm && <AddTask onAddTask={addTask} />}
       {loading ? (
         <p className="loading-message">Loading...</p>
       ) : (
-        <TasksList tasks={tasks} setTasks={setTasks} onDelete={deleteTask} />
+        <TasksList tasks={tasks} onDelete={deleteTask} />
       )}
     </div>
   );

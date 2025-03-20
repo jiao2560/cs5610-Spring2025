@@ -1,27 +1,23 @@
 import React, { useState } from "react";
 
-export default function AddTask({ setTasks, tasks }) {
+export default function AddTask({ onAddTask }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
 
-  const handleTitleChange = (event) => setTitle(event.target.value);
-  const handleDateChange = (event) => setDate(event.target.value);
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // ✅ Prevents page refresh
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents page refresh
+    if (!title.trim() || !date.trim()) {
+      alert("Please fill in both fields.");
+      return;
+    }
 
-    if (title.trim() === "" || date.trim() === "") return; // Prevent adding empty tasks
+    const newTask = { title, date };
 
-    const newTask = {
-      id: tasks.length + 1, // Generate a simple ID
-      title,
-      date,
-    };
+    onAddTask(newTask); // ✅ Send data to server via `App.jsx`
 
-    setTasks([...tasks, newTask]); // Update tasks with new task
-    console.log("New Task Added:", newTask);
-
-    setTitle(""); // Reset input fields
+    // ✅ Reset form fields after submission
+    setTitle("");
     setDate("");
   };
 
@@ -29,11 +25,11 @@ export default function AddTask({ setTasks, tasks }) {
     <form onSubmit={handleSubmit}>
       <div className="form-control">
         <label>Title</label>
-        <input type="text" value={title} onChange={handleTitleChange} />
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div className="form-control">
         <label>Date</label>
-        <input type="text" value={date} onChange={handleDateChange} />
+        <input type="text" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
       <button type="submit">Save</button>
     </form>

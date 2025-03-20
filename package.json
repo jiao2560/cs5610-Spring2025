@@ -2,5 +2,8 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "mongodb": "^6.13.1"
+  },
+  "devDependencies": {
+    "vite": "^6.2.2"
   }
 }

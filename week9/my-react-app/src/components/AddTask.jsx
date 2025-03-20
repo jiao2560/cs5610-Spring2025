@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 
 export default function AddTask() {
-  const [title, setTitle] = useState(""); // Track title input
-  const [date, setDate] = useState(""); // Track date input
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  const handleTitleChange = (event) => setTitle(event.target.value);
+  const handleDateChange = (event) => setDate(event.target.value);
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevents page refresh
+
+    const newTask = { title, date };
+    console.log("New Task:", newTask);
+
+    // Reset inputs after submitting
+    setTitle("");
+    setDate("");
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-control">
         <label>Title</label>
         <input type="text" value={title} onChange={handleTitleChange} />

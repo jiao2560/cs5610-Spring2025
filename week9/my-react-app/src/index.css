@@ -67,3 +67,11 @@
 .task-date {
   font-size: 14px;
 }
+/* No Tasks Left Message */
+.no-tasks {
+  color: gray;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+}
+

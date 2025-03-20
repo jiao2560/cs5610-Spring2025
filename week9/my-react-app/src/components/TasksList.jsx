@@ -8,11 +8,20 @@ export default function TasksList() {
     { id: 3, title: "Work on assignment 2", date: "June 5th at 8 am" },
   ]);
 
+  // Function to delete a task
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
   return (
     <ul className="task-list">
-      {tasks.map((task) => (
-        <Task key={task.id} task={task} /> // Use Task component with key prop
-      ))}
+      {tasks.length > 0 ? (
+        tasks.map((task) => (
+          <Task key={task.id} task={task} onDelete={deleteTask} />
+        ))
+      ) : (
+        <li className="no-tasks">No Tasks Left</li>
+      )}
     </ul>
   );
 }

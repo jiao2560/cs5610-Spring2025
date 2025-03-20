@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function AddTask() {
+export default function AddTask({ setTasks, tasks }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
 
@@ -10,11 +10,18 @@ export default function AddTask() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevents page refresh
 
-    const newTask = { title, date };
-    console.log("New Task:", newTask);
+    if (title.trim() === "" || date.trim() === "") return; // Prevent adding empty tasks
 
-    // Reset inputs after submitting
-    setTitle("");
+    const newTask = {
+      id: tasks.length + 1, // Generate a simple ID
+      title,
+      date,
+    };
+
+    setTasks([...tasks, newTask]); // Update tasks with new task
+    console.log("New Task Added:", newTask);
+
+    setTitle(""); // Reset input fields
     setDate("");
   };
 

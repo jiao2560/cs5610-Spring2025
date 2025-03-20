@@ -1,11 +1,12 @@
 import React from "react";
 
-export default function Header({ myAppName, version }) {
+export default function Header({ onToggleForm, showForm }) {
   return (
     <header className="header">
-      <h1>Welcome to {myAppName} (v{version})</h1>
-      <button className="add-task-btn">Add A Task</button>
+      <h1>Welcome to My App</h1>
+      <button onClick={onToggleForm}>
+        {showForm ? "Close Form" : "Add a Task"}
+      </button>
     </header>
   );
 }
-

@@ -6,14 +6,12 @@ import TasksList from "./components/TasksList";
 export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ Track loading state
+  const [loading, setLoading] = useState(true);
 
   // Fetch tasks from fake server when component mounts
   useEffect(() => {
     async function fetchData() {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
-
-      setLoading(true); // ✅ Start loading
+      setLoading(true);
       try {
         const response = await fetch("http://localhost:5001/tasks");
 
@@ -26,7 +24,7 @@ export default function App() {
       } catch (error) {
         console.error("Fetch Error:", error.message);
       } finally {
-        setLoading(false); // ✅ Stop loading after fetch
+        setLoading(false);
       }
     }
 
@@ -37,16 +35,34 @@ export default function App() {
     setShowForm(!showForm);
   };
 
+  // ✅ DELETE function to remove task from server and UI
+  const deleteTask = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5001/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete task with id ${id}`);
+      }
+
+      console.log(`Task ${id} deleted successfully`);
+
+      // ✅ Update state to remove deleted task from UI
+      setTasks(tasks.filter(task => task.id !== id));
+    } catch (error) {
+      console.error("Delete Error:", error.message);
+    }
+  };
+
   return (
     <div className="app-container">
       <Header onToggleForm={toggleForm} showForm={showForm} />
       {showForm && <AddTask setTasks={setTasks} tasks={tasks} />}
-
-      {/* ✅ Conditional Rendering: Show "Loading..." while fetching */}
       {loading ? (
         <p className="loading-message">Loading...</p>
       ) : (
-        <TasksList tasks={tasks} setTasks={setTasks} />
+        <TasksList tasks={tasks} setTasks={setTasks} onDelete={deleteTask} />
       )}
     </div>
   );

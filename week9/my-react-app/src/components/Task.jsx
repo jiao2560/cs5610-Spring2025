@@ -1,12 +1,11 @@
-import React from "react";
-import { FaTrash } from "react-icons/fa"; // Import trash icon
+import { FaTrash } from "react-icons/fa";
 
 export default function Task({ task, onDelete }) {
   return (
-    <li className="task-item">
+    <li className="task">
       <div className="task-content">
-        <div className="task-text">
-          <p className="task-title">{task.title}</p>
+        <div>
+          <strong>{task.title}</strong>
           <p className="task-date">{task.date}</p>
         </div>
         <FaTrash className="delete-icon" onClick={() => onDelete(task.id)} />

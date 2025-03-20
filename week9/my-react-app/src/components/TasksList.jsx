@@ -1,7 +1,7 @@
 import React from "react";
 import Task from "./Task"; // Import Task component
 
-export default function TasksList({ tasks, setTasks }) {
+export default function TasksList({ tasks, setTasks }) { // Receive tasks as a prop
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
   };

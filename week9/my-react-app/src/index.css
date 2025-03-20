@@ -74,4 +74,12 @@
   margin-top: 10px;
   text-align: center;
 }
+.form-control {
+  margin: 20px 0;
+  display: flex;
+}
+
+.form-control label {
+  margin-right: 10px;
+}
 

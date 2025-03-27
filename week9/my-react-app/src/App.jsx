@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Link, useLocation, useNavigate } from "react-router";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
@@ -40,33 +40,41 @@ function App() {
     setShowForm((prev) => !prev);
   };
 
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch("http://localhost:5001/tasks");
+      if (!response.ok) throw new Error("Fetch failed");
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
+
   // Function to add a new task
   const addTask = async (newTask, onSuccess) => {
     try {
       const response = await fetch("http://localhost:5001/tasks", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to add task. Status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error("Add failed");
 
       const data = await response.json();
-      setTasks((prevTasks) => [...prevTasks, data]); // Update UI
-      setShowForm(false); // Hide form
 
-      // ✅ Trigger navigation with new task ID
-      if (onSuccess) {
-        onSuccess(data.id);
-      }
+      // ✅ Update UI + refresh list
+      await fetchTasks(); // instead of just setTasks([...tasks, data]);
+
+      setShowForm(false);
+      if (onSuccess) onSuccess(data.id);
     } catch (error) {
       console.error("Error adding task:", error);
     }
   };
+
 
   // Function to delete a task
   const deleteTask = async (id) => {

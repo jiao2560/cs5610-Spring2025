@@ -1,58 +1,47 @@
-/* Styles for the App Component */
+/* Style the App container */
 .app-container {
-  border: 2px solid black;  /* Creates a border */
-  padding: 20px;  /* Adds padding inside the div */
-  margin: 20px;  /* Adds space around the div */
+  border: 2px solid #000;
+  padding: 20px;
+  margin: 20px;
 }
 
-/* Styles for the Header Component */
+/* Style the Header component */
 .header {
-  display: flex;  /* Enables Flexbox */
-  justify-content: space-between;  /* Distributes children evenly */
-  align-items: center;  /* Centers items vertically */
-  padding: 10px;  /* Adds padding */
-}
-
-/* Styles for the Add Task Button */
-.add-task-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 4px;
-}
-
-.add-task-btn:hover {
-  background-color: #0056b3;
-}
-/* Task List Styles */
-.task-list {
-  list-style-type: disc; /* Adds bullet points */
-  padding-left: 20px; /* Indent bullets */
-}
-
-.task-item {
-  background: none; /* Remove grey background */
-  padding: 5px 0;
-  font-size: 16px;
-}
-/* Task Container */
-.task-content {
   display: flex;
-  justify-content: space-between; /* Pushes text left and icon right */
+  justify-content: space-between;
   align-items: center;
-  background: #f0f0ff;
   padding: 10px;
-  margin: 8px 0;
+}
+
+/* Style the button */
+.add-task-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #000;
   border-radius: 5px;
 }
 
-/* Delete Icon Styling */
+.add-task-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* Style for Task container */
+.task-container {
+  background-color: #ececff;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for Delete Icon */
 .delete-icon {
+  color: #666;
   cursor: pointer;
-  color: #888;
   font-size: 18px;
 }
 
@@ -60,20 +49,6 @@
   color: red;
 }
 
-.task-title {
-  font-weight: bold;
-}
-
-.task-date {
-  font-size: 14px;
-}
-/* No Tasks Left Message */
-.no-tasks {
-  color: gray;
-  font-style: italic;
-  margin-top: 10px;
-  text-align: center;
-}
 .form-control {
   margin: 20px 0;
   display: flex;
@@ -82,10 +57,8 @@
 .form-control label {
   margin-right: 10px;
 }
-.loading-message {
-  text-align: center;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 20px;
-}
 
+a.active {
+  font-weight: bold;
+  color: rebeccapurple;
+}

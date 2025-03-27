@@ -1,16 +1,28 @@
-import React from "react";
+import PropTypes from "prop-types";
 import Task from "./Task";
 
-export default function TasksList({ tasks, onDelete }) { // Receive onDelete prop
+function TasksList({ tasks, onDelete }) {
   return (
-    <ul className="task-list">
+    <ul>
       {tasks.length > 0 ? (
-        tasks.map((task) => (
-          <Task key={task.id} task={task} onDelete={onDelete} /> // Pass delete function
-        ))
+        tasks.map((task) => <Task key={task.id} task={task} onDelete={onDelete} />)
       ) : (
-        <li className="no-tasks">No Tasks Left</li>
+        <li><strong>No Tasks Left</strong></li>
       )}
     </ul>
   );
 }
+
+// Define PropTypes
+TasksList.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
+export default TasksList;

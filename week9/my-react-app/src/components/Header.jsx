@@ -1,12 +1,26 @@
-import React from "react";
+import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 
-export default function Header({ onToggleForm, showForm }) {
+function Header({ appName, showForm, onToggleForm }) {
+  const location = useLocation();
   return (
     <header className="header">
-      <h1>Welcome to My App</h1>
-      <button onClick={onToggleForm}>
-        {showForm ? "Close Form" : "Add a Task"}
-      </button>
+      <h1>{appName}</h1>
+
+      {location.pathname === "/" && (
+        <button className="toggle-btn" onClick={onToggleForm}>
+          {showForm ? "Close" : "Add a Task"}
+        </button>
+      )}
     </header>
   );
 }
+
+// Define PropTypes
+Header.propTypes = {
+  appName: PropTypes.string.isRequired,
+  showForm: PropTypes.bool.isRequired,
+  onToggleForm: PropTypes.func.isRequired,
+};
+
+export default Header;

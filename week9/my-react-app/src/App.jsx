@@ -4,25 +4,23 @@ import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
 import TasksPage from "./components/TasksPage";
+import LoginButton from "./components/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
-  // const appName = "Welcome to My App";
+  const { isAuthenticated } = useAuth0();
 
-  // State for tasks
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false); // Track form visibility
+  const [showForm, setShowForm] = useState(false);
 
-  // Fetch tasks from JSON Server
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("http://localhost:5001/tasks");
-
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const data = await response.json();
         setTasks(data);
       } catch (error) {
@@ -35,7 +33,6 @@ function App() {
     fetchData();
   }, []);
 
-  // Function to toggle form visibility
   const toggleForm = () => {
     setShowForm((prev) => !prev);
   };
@@ -51,8 +48,6 @@ function App() {
     }
   };
 
-
-  // Function to add a new task
   const addTask = async (newTask, onSuccess) => {
     try {
       const response = await fetch("http://localhost:5001/tasks", {
@@ -64,10 +59,7 @@ function App() {
       if (!response.ok) throw new Error("Add failed");
 
       const data = await response.json();
-
-      // ✅ Update UI + refresh list
-      await fetchTasks(); // instead of just setTasks([...tasks, data]);
-
+      await fetchTasks();
       setShowForm(false);
       if (onSuccess) onSuccess(data.id);
     } catch (error) {
@@ -75,8 +67,6 @@ function App() {
     }
   };
 
-
-  // Function to delete a task
   const deleteTask = async (id) => {
     try {
       const response = await fetch(`http://localhost:5001/tasks/${id}`, {
@@ -94,9 +84,9 @@ function App() {
       console.error("Error deleting task:", error);
     }
   };
+
   const navigate = useNavigate();
   const location = useLocation();
-
   const showHeader = location.pathname === "/";
 
   return (
@@ -105,6 +95,13 @@ function App() {
       <nav>
         <Link to="/">Home</Link> <Link to="/tasks">Tasks</Link>
       </nav>
+
+      {/* Show login button if not authenticated */}
+      {!isAuthenticated && (
+        <div style={{ margin: "1rem" }}>
+          <LoginButton />
+        </div>
+      )}
 
       {/* Show header only for valid routes */}
       {showHeader && (

@@ -4,8 +4,7 @@ import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
 import TasksPage from "./components/TasksPage";
-import LoginButton from "./components/LoginButton";
-import { useAuth0 } from "@auth0/auth0-react";
+import AuthenticationButton from "./components/AuthenticationButton";
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -97,11 +96,8 @@ function App() {
       </nav>
 
       {/* Show login button if not authenticated */}
-      {!isAuthenticated && (
-        <div style={{ margin: "1rem" }}>
-          <LoginButton />
-        </div>
-      )}
+      <AuthenticationButton />
+
 
       {/* Show header only for valid routes */}
       {showHeader && (

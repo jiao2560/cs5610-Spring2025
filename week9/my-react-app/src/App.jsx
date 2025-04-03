@@ -7,6 +7,7 @@ import TasksPage from "./components/TasksPage";
 import AuthenticationButton from "./components/AuthenticationButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./components/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -124,7 +125,8 @@ function App() {
           <Route path=":taskId" element={<TaskDetails />} />
         </Route>
         <Route path="*" element={<h1>Not Found</h1>} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
+
       </Routes>
     </div>
   );

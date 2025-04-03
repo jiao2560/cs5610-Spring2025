@@ -5,16 +5,20 @@ import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
 import TasksPage from "./components/TasksPage";
 import AuthenticationButton from "./components/AuthenticationButton";
-import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const showHeader = location.pathname === "/";
 
   useEffect(() => {
     async function fetchData() {
@@ -52,9 +56,14 @@ function App() {
 
   const addTask = async (newTask, onSuccess) => {
     try {
+      const token = await getAccessTokenSilently();
+
       const response = await fetch("http://localhost:5001/tasks", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ secure header
+        },
         body: JSON.stringify(newTask),
       });
 
@@ -63,7 +72,7 @@ function App() {
       const data = await response.json();
       await fetchTasks();
       setShowForm(false);
-      if (onSuccess) onSuccess(data.id);
+      if (onSuccess) onSuccess(data.task.id); // Adjust if your API response uses another key
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -71,8 +80,14 @@ function App() {
 
   const deleteTask = async (id) => {
     try {
+      const token = await getAccessTokenSilently();
+
       const response = await fetch(`http://localhost:5001/tasks/${id}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ secure header
+        },
       });
 
       if (!response.ok) {
@@ -87,20 +102,17 @@ function App() {
     }
   };
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const showHeader = location.pathname === "/";
-
   return (
     <div className="app-container">
       {/* Always show navigation */}
       <nav>
-        <Link to="/">Home</Link> <Link to="/tasks">Tasks</Link><Link to="/profile">Profile</Link> {/* ✅ Add this */}
+        <Link to="/">Home</Link>{" "}
+        <Link to="/tasks">Tasks</Link>{" "}
+        <Link to="/profile">Profile</Link>
       </nav>
 
-      {/* Show login button if not authenticated */}
+      {/* Auth buttons */}
       <AuthenticationButton />
-
 
       {/* Show header only for valid routes */}
       {showHeader && (
@@ -124,9 +136,8 @@ function App() {
         >
           <Route path=":taskId" element={<TaskDetails />} />
         </Route>
-        <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
-
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </div>
   );

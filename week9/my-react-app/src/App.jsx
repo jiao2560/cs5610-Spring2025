@@ -6,7 +6,7 @@ import TaskDetails from "./components/TaskDetails";
 import TasksPage from "./components/TasksPage";
 import AuthenticationButton from "./components/AuthenticationButton";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import Profile from "./components/Profile";
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -94,7 +94,7 @@ function App() {
     <div className="app-container">
       {/* Always show navigation */}
       <nav>
-        <Link to="/">Home</Link> <Link to="/tasks">Tasks</Link>
+        <Link to="/">Home</Link> <Link to="/tasks">Tasks</Link><Link to="/profile">Profile</Link> {/* ✅ Add this */}
       </nav>
 
       {/* Show login button if not authenticated */}
@@ -124,6 +124,7 @@ function App() {
           <Route path=":taskId" element={<TaskDetails />} />
         </Route>
         <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

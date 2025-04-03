@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
-import TasksList from "./components/TasksList";
+import TaskDetails from "./components/TaskDetails";
+import TasksPage from "./components/TasksPage";
 
-export default function App() {
-  const [showForm, setShowForm] = useState(false);
+function App() {
+  // const appName = "Welcome to My App";
+
+  // State for tasks
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false); // Track form visibility
 
-  // ✅ Fetch tasks from fake server when component mounts
+  // Fetch tasks from JSON Server
   useEffect(() => {
     async function fetchData() {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
-
-      setLoading(true);
       try {
         const response = await fetch("http://localhost:5001/tasks");
 
         if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
         setTasks(data);
       } catch (error) {
-        console.error("Fetch Error:", error.message);
+        console.error("Error fetching tasks:", error);
       } finally {
         setLoading(false);
       }
@@ -33,12 +35,48 @@ export default function App() {
     fetchData();
   }, []);
 
-  // ✅ Function to toggle form visibility
+  // Function to toggle form visibility
   const toggleForm = () => {
-    setShowForm(!showForm);
+    setShowForm((prev) => !prev);
   };
 
-  // ✅ Function to DELETE task from server and update UI
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch("http://localhost:5001/tasks");
+      if (!response.ok) throw new Error("Fetch failed");
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
+
+  // Function to add a new task
+  const addTask = async (newTask, onSuccess) => {
+    try {
+      const response = await fetch("http://localhost:5001/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!response.ok) throw new Error("Add failed");
+
+      const data = await response.json();
+
+      // ✅ Update UI + refresh list
+      await fetchTasks(); // instead of just setTasks([...tasks, data]);
+
+      setShowForm(false);
+      if (onSuccess) onSuccess(data.id);
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  };
+
+
+  // Function to delete a task
   const deleteTask = async (id) => {
     try {
       const response = await fetch(`http://localhost:5001/tasks/${id}`, {
@@ -46,51 +84,54 @@ export default function App() {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to delete task with id ${id}`);
+        throw new Error(`Failed to delete task. Status: ${response.status}`);
       }
-
-      console.log(`Task ${id} deleted successfully`);
-
-      // ✅ Remove task from UI
-      setTasks(tasks.filter((task) => task.id !== id));
+      setTasks((prev) => prev.filter((task) => task.id !== id));
+      if (location.pathname === `/tasks/${id}`) {
+        navigate("/tasks");
+      }
     } catch (error) {
-      console.error("Delete Error:", error.message);
+      console.error("Error deleting task:", error);
     }
   };
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // ✅ Function to ADD a new task (POST request)
-  const addTask = async (newTask) => {
-    try {
-      const response = await fetch("http://localhost:5001/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add task");
-      }
-
-      const addedTask = await response.json();
-
-      // ✅ Update UI with new task
-      setTasks([...tasks, addedTask]);
-    } catch (error) {
-      console.error("Error adding task:", error);
-    }
-  };
+  const showHeader = location.pathname === "/";
 
   return (
     <div className="app-container">
-      <Header onToggleForm={toggleForm} showForm={showForm} />
-      {showForm && <AddTask onAddTask={addTask} />}
-      {loading ? (
-        <p className="loading-message">Loading...</p>
-      ) : (
-        <TasksList tasks={tasks} onDelete={deleteTask} />
+      {/* Always show navigation */}
+      <nav>
+        <Link to="/">Home</Link> <Link to="/tasks">Tasks</Link>
+      </nav>
+
+      {/* Show header only for valid routes */}
+      {showHeader && (
+        <Header
+          appName="Welcome to My App"
+          showForm={showForm}
+          onToggleForm={toggleForm}
+        />
       )}
+
+      <Routes>
+        <Route
+          path="/"
+          element={showForm ? <AddTask onAddTask={addTask} /> : null}
+        />
+        <Route
+          path="/tasks"
+          element={
+            <TasksPage tasks={tasks} onDelete={deleteTask} loading={loading} />
+          }
+        >
+          <Route path=":taskId" element={<TaskDetails />} />
+        </Route>
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
     </div>
   );
 }
+
+export default App;

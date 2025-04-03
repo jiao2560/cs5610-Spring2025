@@ -5,6 +5,8 @@ import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
 import TasksPage from "./components/TasksPage";
 import AuthenticationButton from "./components/AuthenticationButton";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 function App() {
   const { isAuthenticated } = useAuth0();

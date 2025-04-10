@@ -1,13 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { Form, Row, Col, Button } from "react-bootstrap";
 
 function AddTask({ onAddTask }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
 
-  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -18,7 +18,6 @@ function AddTask({ onAddTask }) {
 
     const newTask = { title, date };
 
-    // ✅ Pass callback to handle navigation
     onAddTask(newTask, (newId) => {
       navigate(`/tasks/${newId}`);
     });
@@ -28,29 +27,40 @@ function AddTask({ onAddTask }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-control">
-        <label>Title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="form-control">
-        <label>Date</label>
-        <input
-          type="text"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-      </div>
-      <button type="submit">Save</button>
-    </form>
+    <Form onSubmit={handleSubmit} className="p-3">
+      <Row className="g-3 align-items-end">
+        <Col xs={12} sm={4}>
+          <Form.Group controlId="formTitle">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter task title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+        <Col xs={12} sm={4}>
+          <Form.Group controlId="formDate">
+            <Form.Label>Date</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter due date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+        <Col xs={12} sm="auto">
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 
-// Define PropTypes
 AddTask.propTypes = {
   onAddTask: PropTypes.func.isRequired,
 };

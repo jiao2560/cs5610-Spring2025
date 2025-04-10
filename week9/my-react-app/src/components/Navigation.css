@@ -6,14 +6,14 @@
     position: relative;
   }
 
-  /* Hide menu icon by default (for large screens) */
+  /* Hide menu icon by default (large screens) */
   .menu-icon {
     display: none;
     font-size: 24px;
     cursor: pointer;
   }
 
-  /* nav-inner default for large screens */
+  /* nav-inner layout on large screens */
   .nav-inner {
     display: flex;
     justify-content: flex-end;
@@ -22,28 +22,22 @@
     flex-wrap: wrap;
   }
 
-  /* vertical nav-links on small screens */
   .nav-links {
     display: flex;
     gap: 15px;
   }
 
-  /* SMALLEST SCREEN BEHAVIOR */
+  /* Small screen behavior */
   @media (max-width: 576px) {
     .menu-icon {
       display: block;
     }
 
     .nav-inner {
-      display: none; /* hidden by default on small screens */
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
       margin-top: 10px;
-    }
-
-    .nav-inner.show {
-      display: flex; /* only show if menuOpen is true */
     }
 
     .nav-links {
@@ -51,5 +45,3 @@
       gap: 10px;
     }
   }
-
-

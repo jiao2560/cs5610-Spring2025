@@ -1,22 +1,23 @@
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function Header({ appName, showForm, onToggleForm }) {
   const location = useLocation();
+
   return (
-    <header className="header">
-      <h1>{appName}</h1>
+    <header className="header d-flex justify-content-between align-items-center px-3 py-2">
+      <h1 className="m-0">{appName}</h1>
 
       {location.pathname === "/" && (
-        <button className="toggle-btn" onClick={onToggleForm}>
+        <Button variant="primary" onClick={onToggleForm}>
           {showForm ? "Close" : "Add a Task"}
-        </button>
+        </Button>
       )}
     </header>
   );
 }
 
-// Define PropTypes
 Header.propTypes = {
   appName: PropTypes.string.isRequired,
   showForm: PropTypes.bool.isRequired,

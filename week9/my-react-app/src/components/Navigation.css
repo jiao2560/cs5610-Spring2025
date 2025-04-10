@@ -1,0 +1,32 @@
+.nav-container {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  /* Small screens */
+  @media (max-width: 576px) {
+    .nav-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+

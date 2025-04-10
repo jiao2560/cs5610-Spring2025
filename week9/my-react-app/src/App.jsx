@@ -8,6 +8,8 @@ import AuthenticationButton from "./components/AuthenticationButton";
 import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth0 } from "@auth0/auth0-react";
+import Navigation from "./components/Navigation";
+
 
 function App() {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -105,14 +107,7 @@ function App() {
   return (
     <div className="app-container">
       {/* Always show navigation */}
-      <nav>
-        <Link to="/">Home</Link>{" "}
-        <Link to="/tasks">Tasks</Link>{" "}
-        <Link to="/profile">Profile</Link>
-      </nav>
-
-      {/* Auth buttons */}
-      <AuthenticationButton />
+      <Navigation />
 
       {/* Show header only for valid routes */}
       {showHeader && (
